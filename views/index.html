@@ -1,0 +1,165 @@
+{{ block "index" . }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Braeden Norman</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdn.tailwindcss.com" defer></script>
+        <script src="https://unpkg.com/htmx.org@1.8.1/dist/htmx.min.js" defer></script>
+        <style>
+            :root{
+                --brightness-factor: {{ .BrightnessFactor }};
+
+
+                --sky-primary: #76ade3;
+                --sky-secondary: #426ea6;
+                
+                --sun-primary: #fff7f9;
+                --sun-secondary: #f1e85f;
+
+                --cloud-primary: #bdb9b6;
+                --cloud-secondary: #51647f;
+
+                --green-primary: #87c236;
+                --green-secondary: #4b9f40;
+
+                --moon-primary: #beb4a4;
+                --moon-secondary: #898075;
+
+                --water-primary: #c7dce0;
+                --water-secondary: #152b2e;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --primary-color: #2b1e25;
+                    --secondary-color: #426ea6;
+                }
+            }
+
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --primary-color: #fff7f9;
+                    --secondary-color: #f1e85f;
+                }
+            } 
+            
+            .primary {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .secondary {
+                background-color: var(--secondary-color);
+            }
+
+            .sky {
+                background: linear-gradient(to bottom, var(--sky-primary), var(--sky-secondary));
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .sky-secondary {
+                background-color: var(--sky-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .sun {
+                background-color: var(--sun-primary);
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .sun-secondary {
+                background-color: var(--sun-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+            .cloud {
+                background-color: var(--cloud-primary);
+                filter: brightness(var(--brightness-factor));
+            }
+            .cloud-secondary {
+                background-color: var(--cloud-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .green {
+                background-color: var(--green-primary);
+                filter: brightness(var(--brightness-factor));
+            }
+            .green-secondary {
+                background-color: var(--green-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .moon {
+                background-color: var(--moon-primary);
+                filter: brightness(var(--brightness-factor));
+            }
+            .moon-secondary {
+                background-color: var(--moon-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+
+            .water {
+                background: radial-gradient(circle, rgba(0,189,231,1) 90%, rgba(2,0,36,1) 100%);
+                filter: brightness(var(--brightness-factor));
+                color: radial-gradient(circle, rgba(0,189,231,1) 90%, rgba(2,0,36,1) 100%);
+            }
+            .water-secondary {
+                background-color: var(--water-secondary);
+                filter: brightness(var(--brightness-factor));
+            }
+        </style>
+        <!-- blocks until header is loaded -->
+        <style>
+            body { display: none; }
+        </style>
+        <script>
+            window.addEventListener('load', function() {
+                document.body.style.display = 'block';
+            });
+        </script>
+        {{ .CSS }}
+    </head>
+    <body>
+        {{ .Body }}
+    </body>
+</html>
+{{ end }}
+
+
+
+{{ block "body2" . }}
+<div id="count">
+    {{ template "count" . }}
+</div>
+<button hx-target="#count" hx-post="/count">Click me</button>
+<hr>
+<form hx-target="#contacts" hx-post="/contacts">
+    name: <input type="text" name="name">
+    email: <input type="text" name="email">
+    <button type="submit">Submit</button>
+</form>
+{{ template "display" . }}
+<hr>
+{{ end }}
+
+{{ template "display" . }}
+{{ block "count" . }}
+    Count {{ .Count }}
+{{ end }}
+
+
+{{ block "display" . }}
+    <div id="contacts" style="display: flex; flex-direction: column; gap: 10px;">
+        {{ range .Contacts }}
+            <div style="display: flex; flex-direction: row; gap: 10px;">
+                Name: <span>{{ .Name }}</span>
+                Email: <span>{{ .Email }}</span>
+            </div>
+        {{ end }}
+    </div>
+{{ end }}
+
+
+        

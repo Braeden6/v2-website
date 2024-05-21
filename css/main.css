@@ -1,0 +1,14 @@
+.asdasd {
+  /* position: relative; */
+  /* animation: mymove 10s infinite; */
+  background-color: red;
+  /* width: 5vw;
+  height: 5vw; */
+}
+
+@keyframes mymove {
+    from {left: 0px;}
+  to {left: 110vw;}
+}
+
+
